@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>🔧 ATCR Admin Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              light: '#dbeafe',
+              DEFAULT: '#3b82f6',
+              dark: '#1e3a8a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style>
+  html.light body {
+    background-color: white;
+    color: black;
+  }
+  html.dark body {
+    background-color: #111827; /* Tailwind dark background */
+    color: white;
+  }
+</style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-6">
+  <div class="max-w-3xl mx-auto bg-white-800 p-6 rounded-xl shadow-lg border border-primary">
+    <div class="flex justify-between items-center mb-6">
+<div class="flex justify-center mt-4">
+  <img src="western-rail-logo.png"
+       alt="Western Railway Logo"
+       class="w-28" />
+</div>
+      <h1 class="text-3xl font-bold text-black dark:text-white">🔐 ATCR Admin Panel</h1>
+      <button onclick="toggleTheme()" class="px-4 py-1 rounded bg-primary text-white hover:bg-primary-dark">🌓 Theme</button>
+    </div>
+
+    <div class="mb-4 text-yellow-400 font-semibold">
+      ⚠️ Technician Access Only — Unauthorized users should not update complaints.
+    </div>
+
+    <form id="adminForm" class="space-y-4">
+      <label class="block">
+       <span class="text-sm text-black dark:text-white">Row Number (from Sheet)</span>
+        <input type="number" name="RowNumber" required class="w-full p-2 mt-1 border border-gray-600 rounded bg-gray-700 text-white" />
+      </label>
+
+      <label class="block">
+        <span class="text-sm text-black dark:text-white">👷 Attended By</span>
+        <input type="text" name="AttendedBy" required class="w-full p-2 mt-1 border border-gray-600 rounded bg-gray-700 text-white" />
+      </label>
+
+      <label class="block">
+        <span class="text-sm text-black dark:text-white">✅ Failure Resolved?</span>
+        <select name="FailureResolved" required class="w-full p-2 mt-1 border border-gray-600 rounded bg-gray-700 text-white">
+          <option value="">-- Select Option --</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </label>
+
+      <label class="block">
+        <span class="text-sm text-black dark:text-white">📝 Remarks</span>
+        <textarea name="Remarks" rows="3" class="w-full p-2 mt-1 border border-gray-600 rounded bg-gray-700 text-white"></textarea>
+      </label>
+
+      <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark">📤 Update Complaint</button>
+    </form>
+
+    <p id="responseMsg" class="mt-4 font-medium text-center text-green-400"></p>
+  </div>
+
+  <script>
+    function toggleTheme() {
+  const html = document.documentElement;
+  if (html.classList.contains("light")) {
+    html.classList.remove("light");
+    html.classList.add("dark");
+  } else {
+    html.classList.remove("dark");
+    html.classList.add("light");
+  }
+}
+  </script>
+
+  <script src="admin.js"></script>
+<p class="fixed bottom-2 right-4 text-xs italic text-black dark:text-white opacity-70">
+  Designed by Parth Parmar
+</p>
+</body>
+</html>
