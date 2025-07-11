@@ -9,7 +9,7 @@ document.getElementById("adminForm").addEventListener("submit", function (e) {
     Remarks: form.Remarks.value.trim()
   };
 
-  const scriptURL = "https://script.google.com/macros/s/AKfycbyLiEyem26egy4Fm3p36oVJ3MMaK49qsQuD9V6UufdBkiO7C6Ez7OEq-1hvQkAk9SV2cA/exec";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbw-i-g23uVt6qOrd7fTQhTPoxK1dfxlQYwngL0FeZXQI6Ejt_0QrQEN6ABPnkd9bLGW_g/exec";
 
   fetch(scriptURL, {
     method: "POST",
