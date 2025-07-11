@@ -9,7 +9,7 @@ document.getElementById("adminForm").addEventListener("submit", function (e) {
     Remarks: form.Remarks.value.trim()
   };
 
-  const scriptURL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"; // Replace with your Apps Script URL
+  const scriptURL = "https://script.google.com/macros/s/AKfycbw-i-g23uVt6qOrd7fTQhTPoxK1dfxlQYwngL0FeZXQI6Ejt_0QrQEN6ABPnkd9bLGW_g/exec";
 
   fetch(scriptURL, {
     method: "POST",
