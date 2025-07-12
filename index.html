@@ -2,7 +2,9 @@
 <html lang="en" class="light">
 <head>
   <meta charset="UTF-8" />
-  <title>🔧 ATCR Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Request / Complaint Form</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -13,87 +15,80 @@
             primary: {
               light: '#dbeafe',
               DEFAULT: '#3b82f6',
-              dark: '#1e3a8a'
+              dark: '#1e40af'
             }
           }
         }
       }
     }
   </script>
-<style>
-  html.light body {
-    background-color: white;
-    color: black;
-  }
-  html.dark body {
-    background-color: #111827; /* Tailwind dark background */
-    color: white;
-  }
-</style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen p-6">
-  <div class="max-w-3xl mx-auto bg-white-800 p-6 rounded-xl shadow-lg border border-primary">
-    <div class="flex justify-between items-center mb-6">
+<body class="bg-primary-light text-gray-900 dark:bg-gray-900 dark:text-white p-4 transition duration-300">
+  <div class="max-w-xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
 <div class="flex justify-center mt-4">
   <img src="western-rail-logo.png"
        alt="Western Railway Logo"
        class="w-28" />
 </div>
-      <h1 class="text-3xl font-bold text-black dark:text-white">🔐 ATCR Admin Panel</h1>
-      <button onclick="toggleTheme()" class="px-4 py-1 rounded bg-primary text-white hover:bg-primary-dark">🌓 Theme</button>
-    </div>
+    <h1 class="text-2xl font-bold mb-4 text-center text-primary-dark">New Connection / Complaint Form</h1>
 
-    <div class="mb-4 text-yellow-400 font-semibold">
-      ⚠️ Technician Access Only — Unauthorized users should not update complaints.
-    </div>
+    <button onclick="toggleTheme()" class="mb-4 px-3 py-1 rounded bg-primary-dark text-white hover:bg-primary">Toggle Light/Dark Mode</button>
 
-    <form id="adminForm" class="space-y-4">
-      <label class="block">
-       <span class="text-sm text-black dark:text-white">Row Number (from Sheet)</span>
-        <input type="number" name="RowNumber" required class="w-full p-2 mt-1 border border-gray-600 rounded bg-gray-700 text-white" />
-      </label>
+    <form id="subscriberForm" class="space-y-4">
+      <input type="text" name="Name" placeholder="Name" required class="w-full p-2 border border-gray-300 rounded" />
+      <input type="text" name="Designation" placeholder="Designation" required class="w-full p-2 border border-gray-300 rounded" />
+      <input type="text" name="Department" placeholder="Department" required class="w-full p-2 border border-gray-300 rounded" />
+      <input type="text" name="AutoTel" placeholder="Auto Telephone Number (if any)" class="w-full p-2 border border-gray-300 rounded" />
+      <input type="tel" name="Phone" placeholder="Phone Number" required class="w-full p-2 border border-gray-300 rounded" />
 
-      <label class="block">
-        <span class="text-sm text-black dark:text-white">👷 Attended By</span>
-        <input type="text" name="AttendedBy" required class="w-full p-2 mt-1 border border-gray-600 rounded bg-gray-700 text-white" />
-      </label>
+      <select name="RequestType" id="requestType" required onchange="toggleComplaintFields()" class="w-full p-2 border border-gray-300 rounded">
+        <option value="">-- Select Request Type --</option>
+        <option value="New Connection">New Connection</option>
+        <option value="Complaint">Complaint</option>
+      </select>
 
-      <label class="block">
-        <span class="text-sm text-black dark:text-white">✅ Failure Resolved?</span>
-        <select name="FailureResolved" required class="w-full p-2 mt-1 border border-gray-600 rounded bg-gray-700 text-white">
-          <option value="">-- Select Option --</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </label>
+      <div id="requestDetails" style="display:none;">
+  <select name="ConnectionType" class="w-full p-2 border border-gray-300 rounded">
+    <option value="">-- Select Type --</option>
+    <option value="Internet">Internet</option>
+    <option value="Telephone">Telephone</option>
+  </select>
 
-      <label class="block">
-        <span class="text-sm text-black dark:text-white">📝 Remarks</span>
-        <textarea name="Remarks" rows="3" class="w-full p-2 mt-1 border border-gray-600 rounded bg-gray-700 text-white"></textarea>
-      </label>
+  <div id="complaintSection">
+    <textarea name="ComplaintDetails" placeholder="Complaint Details" rows="3" class="w-full p-2 border border-gray-300 rounded"></textarea>
+  </div>
+</div>
 
-      <button type="submit" class="w-full bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark">📤 Update Complaint</button>
+      <button type="submit" class="w-full bg-primary text-white py-2 rounded hover:bg-primary-dark">Submit</button>
     </form>
 
-    <p id="responseMsg" class="mt-4 font-medium text-center text-green-400"></p>
+    <p id="responseMsg" class="mt-4 text-center font-medium"></p>
   </div>
 
   <script>
-    function toggleTheme() {
-  const html = document.documentElement;
-  if (html.classList.contains("light")) {
-    html.classList.remove("light");
-    html.classList.add("dark");
-  } else {
-    html.classList.remove("dark");
-    html.classList.add("light");
-  }
-}
-  </script>
+  function toggleComplaintFields() {
+    const type = document.getElementById("requestType").value;
+    const detailsDiv = document.getElementById("requestDetails");
+    const complaintSection = document.getElementById("complaintSection");
 
-  <script src="index.js"></script>
+    if (type === "Complaint") {
+      detailsDiv.style.display = "block";
+      complaintSection.style.display = "block";
+    } else if (type === "New Connection") {
+      detailsDiv.style.display = "block";
+      complaintSection.style.display = "none"; // hides complaint box
+    } else {
+      detailsDiv.style.display = "none";
+    }
+  }
+</script>
+
+  <script src="script.js"></script>
 <p class="fixed bottom-2 right-4 text-xs italic text-black dark:text-white opacity-70">
   Designed by Parth Parmar
 </p>
+<div id="connectionPopup" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-800 text-white text-center px-6 py-4 rounded-xl shadow-lg opacity-0 pointer-events-none transition duration-300 z-50">
+  🔔 Please forward a letter to Sr. DSTE Office for new connections.
+</div>
 </body>
 </html>
